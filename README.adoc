@@ -1,0 +1,28 @@
+= cargo-cmake-vcpkg
+
+== Setup
+
+....
+git clone --recurse-submodules https://github.com/mehmetoguzderin/cargo-cmake-vcpkg
+cd cargo-cmake-vcpkg
+conda env create --prefix ./.conda -f environment.yml
+conda activate ./.conda
+....
+
+== Configure
+
+....
+cmake -G Ninja -DCMAKE_MAKE_PROGRAM=ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=Release -S ./ -B ./build
+....
+
+== Build
+
+....
+cmake --build ./build
+....
+
+== Run
+
+....
+./build/MainRs
+....

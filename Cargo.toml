@@ -1,0 +1,8 @@
+[package]
+name = "cargo-cmake-vcpkg"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "MainRs"
+path = "main.rs"
