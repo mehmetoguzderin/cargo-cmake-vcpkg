@@ -4,13 +4,13 @@ use std::os::raw::{c_char, c_int, c_uchar};
 use libloading::{Library, Symbol};
 
 #[cfg(target_os = "windows")]
-const LIB_NAME: &str = "lib-cpp.dll";
+const LIB_NAME: &str = "./lib-cpp.dll";
 
 #[cfg(target_os = "linux")]
-const LIB_NAME: &str = "liblib-cpp.so";
+const LIB_NAME: &str = "./liblib-cpp.so";
 
 #[cfg(target_os = "macos")]
-const LIB_NAME: &str = "liblib-cpp.dylib";
+const LIB_NAME: &str = "./liblib-cpp.dylib";
 
 fn main() {
     unsafe {
