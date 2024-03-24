@@ -3,34 +3,32 @@ use std::os::raw::{c_char, c_int, c_uchar};
 
 use libloading::{Library, Symbol};
 
-#[link(name = "LibCxx")]
-extern "C" {
-    fn hello_world();
-}
 
 #[cfg(target_os = "windows")]
-const LIB_NAME: &str = "LibSharedCxx.dll";
+const LIB_NAME: &str = "lib-cpp.dll";
 
 #[cfg(target_os = "linux")]
-const LIB_NAME: &str = "libLibSharedCxx.so";
+const LIB_NAME: &str = "liblib-cpp.so";
 
 #[cfg(target_os = "macos")]
-const LIB_NAME: &str = "libLibSharedCxx.dylib";
+const LIB_NAME: &str = "liblib-cpp.dylib";
 
 fn main() {
     unsafe {
-        hello_world();
-
         let lib = Library::new(LIB_NAME).expect("Failed to load library");
 
-        let writeTiff: Symbol<
+        let hello_world: Symbol<unsafe extern "C" fn() -> ()> = lib.get(b"hello_world").expect("Failed to load function");
+
+        hello_world();
+
+        let write_tiff: Symbol<
             unsafe extern "C" fn(
                 filename: *const c_char,
                 data: *const c_uchar,
                 width: c_int,
                 height: c_int,
             ) -> bool,
-        > = lib.get(b"writeTiff").expect("Failed to load function");
+        > = lib.get(b"write_tiff").expect("Failed to load function");
 
         let mut data = vec![0u8; 512 * 512];
         for y in 0..512 {
@@ -41,7 +39,7 @@ fn main() {
         }
 
         let filename = CString::new("gradient.tif").expect("CString::new failed");
-        let result = writeTiff(filename.as_ptr(), data.as_ptr(), 512, 512);
+        let result = write_tiff(filename.as_ptr(), data.as_ptr(), 512, 512);
         if result {
             println!("Wrote {}", filename.to_str().unwrap());
         } else {

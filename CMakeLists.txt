@@ -10,15 +10,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(TIFF REQUIRED)
 
-add_library(LibCxx STATIC
+add_library(lib-cpp SHARED
     lib.cpp
 )
 
-add_library(LibSharedCxx SHARED
-    lib-shared.cpp
-)
-
-target_link_libraries(LibSharedCxx PRIVATE
+target_link_libraries(lib-cpp PRIVATE
     TIFF::TIFF
 )
 
@@ -34,6 +30,4 @@ FetchContent_MakeAvailable(Corrosion)
 
 corrosion_import_crate(MANIFEST_PATH Cargo.toml)
 
-corrosion_link_libraries(MainRs LibCxx)
-
-# corrosion_link_libraries(MainRs LibSharedCxx)
+corrosion_link_libraries(main-rs lib-cpp)
