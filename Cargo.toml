@@ -6,3 +6,6 @@ edition = "2021"
 [[bin]]
 name = "MainRs"
 path = "main.rs"
+
+[dependencies]
+libloading = "0.8.3"

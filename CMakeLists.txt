@@ -14,7 +14,11 @@ add_library(LibCxx STATIC
     lib.cpp
 )
 
-target_link_libraries(LibCxx PRIVATE
+add_library(LibSharedCxx SHARED
+    lib-shared.cpp
+)
+
+target_link_libraries(LibSharedCxx PRIVATE
     TIFF::TIFF
 )
 
@@ -31,3 +35,5 @@ FetchContent_MakeAvailable(Corrosion)
 corrosion_import_crate(MANIFEST_PATH Cargo.toml)
 
 corrosion_link_libraries(MainRs LibCxx)
+
+# corrosion_link_libraries(MainRs LibSharedCxx)
