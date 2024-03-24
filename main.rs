@@ -3,7 +3,6 @@ use std::os::raw::{c_char, c_int, c_uchar};
 
 use libloading::{Library, Symbol};
 
-
 #[cfg(target_os = "windows")]
 const LIB_NAME: &str = "lib-cpp.dll";
 
@@ -17,7 +16,8 @@ fn main() {
     unsafe {
         let lib = Library::new(LIB_NAME).expect("Failed to load library");
 
-        let hello_world: Symbol<unsafe extern "C" fn() -> ()> = lib.get(b"hello_world").expect("Failed to load function");
+        let hello_world: Symbol<unsafe extern "C" fn() -> ()> =
+            lib.get(b"hello_world").expect("Failed to load function");
 
         hello_world();
 
@@ -33,7 +33,13 @@ fn main() {
         let mut data = vec![0u8; 512 * 512];
         for y in 0..512 {
             for x in 0..512 {
-                let color = (x + y) as f32 / 1024.0 * 255.0;
+                let mut color = (x + y) as f32 / 1024.0 * 255.0;
+                let dx = x as f32 - 256.0;
+                let dy = y as f32 - 256.0;
+                let distance = (dx * dx + dy * dy).sqrt();
+                if distance < 192.0 && distance > 160.0 {
+                    color = 255.0;
+                }
                 data[y * 512 + x] = color as u8;
             }
         }

@@ -11,7 +11,7 @@ extern "C" {
 LIB_FUNC void hello_world() { std::cout << "Hello, World!" << std::endl; }
 
 LIB_FUNC bool write_tiff(const char *filename, const uint8_t *data, int width,
-               int height) {
+                         int height) {
   TIFF *tif = TIFFOpen(filename, "w");
   if (tif == NULL) {
     std::cerr << "Can't open " << filename << " for writing" << std::endl;

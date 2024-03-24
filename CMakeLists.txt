@@ -29,5 +29,3 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(Corrosion)
 
 corrosion_import_crate(MANIFEST_PATH Cargo.toml)
-
-corrosion_link_libraries(main-rs lib-cpp)
