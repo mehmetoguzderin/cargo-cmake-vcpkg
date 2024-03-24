@@ -1,5 +1,4 @@
-use std::ffi::CString;
-use std::os::raw::{c_char, c_int, c_uchar};
+use std::ffi::{c_char, c_int, c_uchar, CString};
 
 use libloading::{Library, Symbol};
 
